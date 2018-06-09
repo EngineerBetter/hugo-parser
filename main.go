@@ -75,7 +75,7 @@ func main() {
 		index := fmt.Sprintf("%02d", i+1)
 		fullSrc := learningPath + "/" + mapping.Name + "/index.md"
 		fullTgtDir := targetDir + "/" + index + "-" + mapping.Name
-		fullTgt := fullTgtDir + "/index.md"
+		fullTgt := fullTgtDir + "/_index.md"
 		if !exists(fullTgtDir) {
 			os.MkdirAll(fullTgtDir, mode)
 		}
