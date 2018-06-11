@@ -84,9 +84,10 @@ func main() {
 
 		err = shutil.CopyFile(fullSrc, fullTgt, false)
 		check(err)
-		for _, exercise := range mapping.Exercises {
+		for j, exercise := range mapping.Exercises {
+			subIndex := fmt.Sprintf("%02d", j+1)
 			fullSrc := exercisePath + "/" + exercise + "/README.md"
-			fullTgt := targetDir + "/" + index + "-" + mapping.Name + "/" + exercise + ".md"
+			fullTgt := targetDir + "/" + index + "-" + mapping.Name + "/" + subIndex + "-" + exercise + ".md"
 			fmt.Println(fullSrc + " to " + fullTgt)
 			err = shutil.CopyFile(fullSrc, fullTgt, false)
 			check(err)
