@@ -91,6 +91,12 @@ func main() {
 			fmt.Println(fullSrc + " to " + fullTgt)
 			err = shutil.CopyFile(fullSrc, fullTgt, false)
 			check(err)
+			fullSrcImages := exercisePath + "/" + exercise + "/images"
+			if _, err := os.Stat(fullSrcImages); err == nil {
+				fullTgtImages := targetDir + "/" + index + "-" + mapping.Name + "/images"
+				err = shutil.CopyTree(fullSrcImages, fullTgtImages, nil)
+				check(err)
+			}
 		}
 	}
 
