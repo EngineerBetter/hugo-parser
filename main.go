@@ -75,7 +75,7 @@ func main() {
 		index := fmt.Sprintf("%02d", i+1)
 		fullSrc := learningPath + "/" + mapping.Name + "/index.md"
 		fullTgtDir := targetDir + "/" + index + "-" + mapping.Name
-		fullTgt := fullTgtDir + "/index.md"
+		fullTgt := fullTgtDir + "/_index.md"
 		if !exists(fullTgtDir) {
 			os.MkdirAll(fullTgtDir, mode)
 		}
@@ -84,12 +84,19 @@ func main() {
 
 		err = shutil.CopyFile(fullSrc, fullTgt, false)
 		check(err)
-		for _, exercise := range mapping.Exercises {
+		for j, exercise := range mapping.Exercises {
+			subIndex := fmt.Sprintf("%02d", j+1)
 			fullSrc := exercisePath + "/" + exercise + "/README.md"
-			fullTgt := targetDir + "/" + index + "-" + mapping.Name + "/" + exercise + ".md"
+			fullTgt := targetDir + "/" + index + "-" + mapping.Name + "/" + subIndex + "-" + exercise + ".md"
 			fmt.Println(fullSrc + " to " + fullTgt)
 			err = shutil.CopyFile(fullSrc, fullTgt, false)
 			check(err)
+			fullSrcImages := exercisePath + "/" + exercise + "/images"
+			if _, err := os.Stat(fullSrcImages); err == nil {
+				fullTgtImages := targetDir + "/" + index + "-" + mapping.Name + "/" + subIndex + "-" + exercise + "/images"
+				err = shutil.CopyTree(fullSrcImages, fullTgtImages, nil)
+				check(err)
+			}
 		}
 	}
 
